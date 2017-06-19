@@ -1,5 +1,7 @@
 """Binary tree module"""
 
+from queue import Queue
+
 
 class BSTNode:
     """
@@ -16,7 +18,7 @@ class BSTNode:
         self.right = None
 
     def __str__(self):
-        return f'node value: {self.val}'
+        return f'-{self.val}-'
 
 
 class BinarySearchTree:
@@ -81,6 +83,7 @@ class BinarySearchTree:
         parent_node = None
         node_to_remove = None
 
+        # find node to remove
         while current_node is not None:
             if current_node.val == val:
                 node_to_remove = current_node
@@ -95,14 +98,19 @@ class BinarySearchTree:
         if node_to_remove is None:
             raise ValueError(f"can't find node to remove {val}")
 
-        # node has no children
+        # case 1: node has no children
+        # just remove it
         if node_to_remove.left is None and node_to_remove.right is None:
-            parent_node.left = None
-            parent_node.right = None
+            if node_to_remove.val == parent_node.left.val:
+                parent_node.left = None
+            else:
+                parent_node.right = None
+
             self.size -= 1
             return
 
-        # node has one child
+        # case 2: node has one child
+        # just replace removed node with it's child
         if node_to_remove.left is None or node_to_remove.right is None:
             if parent_node.left is node_to_remove:
                 parent_node.left = node_to_remove.left if node_to_remove.left is not None else node_to_remove.right
@@ -110,6 +118,24 @@ class BinarySearchTree:
                 parent_node.right = node_to_remove.left if node_to_remove.left is not None else node_to_remove.right
             self.size -= 1
             return
+
+        # case 3: node has two children
+        # find the min node in the right subtree
+        # replace removed node value with the min node val
+        # remove the min node
+        min_leaf = node_to_remove.right
+        min_leaf_parent = node_to_remove
+
+        while True:
+            if min_leaf.left is None:
+                break
+            else:
+                min_leaf_parent = min_leaf
+                min_leaf = min_leaf.left
+
+        node_to_remove.val = min_leaf.val
+        min_leaf_parent.left = None
+        self.size -= 1
 
     def clear(self):
         """Remove all nodes"""
@@ -124,25 +150,27 @@ class BinarySearchTree:
             return []
 
         ar = []
+        q = Queue()
 
-        self._append_array(self.root_node, ar)
+        current_node = self.root_node
+
+        q.put(current_node)
+        while not q.empty():
+            node = q.get()
+            ar.append(node.val)
+            if node.left is not None:
+                q.put(node.left)
+            if node.right is not None:
+                q.put(node.right)
 
         return ar
-
-    def _append_array(self, node, ar):
-        if node is not None:
-            ar.append(node.val)
-
-            if node.left is not None:
-                self._append_array(node.left, ar)
-            if node.right is not None:
-                self._append_array(node.right, ar)
 
     def print(self, node):
         pass
 
     def root(self):
         """Root node"""
+
         if self.root_node is None:
             raise ValueError("no root node")
 
@@ -155,19 +183,24 @@ class BinarySearchTree:
 
 
 if __name__ == "__main__":
-    some_values = [4, 1, 6, 0, 12, 7, 13, 5]
-    bst_tree = BinarySearchTree(some_values)
-
-    print(f"root - {bst_tree.root()}")
-    print(f"number of nodes - {bst_tree.count()}")
-    print(f"found - {bst_tree.contains(1)}")
-    print(bst_tree.count())
-    print(bst_tree.to_array())
-    bst_tree.insert(44)
-    bst_tree.insert(23)
-    print(f"number of nodes - {bst_tree.count()}")
-    print(bst_tree)
-    bst_tree.remove(44)
-    bst_tree.remove(1)
-    print(bst_tree)
+    pass
+    # some_values = [4, 1, 6, 0, 12, 7, 13, 5]
+    # bst_tree = BinarySearchTree(some_values)
+    # print(bst_tree)
+    # print(bst_tree.count())
+    # bst_tree.remove(6)
+    # print(bst_tree)
+    # print(bst_tree.count())
+    # print(f"root - {bst_tree.root()}")
+    # print(f"number of nodes - {bst_tree.count()}")
+    # print(f"found - {bst_tree.contains(1)}")
+    # print(bst_tree.count())
+    # print(bst_tree.to_array())
+    # bst_tree.insert(44)
+    # bst_tree.insert(23)
+    # print(f"number of nodes - {bst_tree.count()}")
+    # print(bst_tree)
+    # bst_tree.remove(44)
+    # bst_tree.remove(1)
+    # print(bst_tree)
 
