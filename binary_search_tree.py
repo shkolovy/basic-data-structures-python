@@ -165,6 +165,45 @@ class BinarySearchTree:
 
         return ar
 
+    def traversal_in_order(self, action):
+        """
+        InOrder traversal, the nodes would be sorted in numerical order
+        from smallest to largest
+        """
+
+        self._trav_in(self.root_node, action)
+
+    def _trav_in(self, node, action):
+        if node is not None:
+            self._trav_in(node.left, action)
+            action(node)
+            self._trav_in(node.right, action)
+
+    def traversal_pre_order(self, action):
+        """PreOrder traversal, like DFS"""
+
+        self._trav_pre(self.root_node, action)
+
+    def _trav_pre(self, node, action):
+        if node is not None:
+            action(node)
+            self._trav_pre(node.left, action)
+            self._trav_pre(node.right, action)
+
+    def traversal_post_order(self, action):
+        """
+        PostOrder traversal, PostOrder traversals are often used to delete an entire tree,
+        such as in programming languages where each node must be freed, or to delete subtrees
+        """
+
+        self._trav_post(self.root_node, action)
+
+    def _trav_post(self, node, action):
+        if node is not None:
+            self._trav_post(node.left, action)
+            self._trav_post(node.right, action)
+            action(node)
+
     def print(self, node):
         pass
 
@@ -184,8 +223,12 @@ class BinarySearchTree:
 
 if __name__ == "__main__":
     pass
+
     # some_values = [4, 1, 6, 0, 12, 7, 13, 5]
     # bst_tree = BinarySearchTree(some_values)
+    # bst_tree.traversal_pre_order(print)
+    # bst_tree.traversal_post_order(print)
+    # bst_tree.traversal_in_order(print)
     # print(bst_tree)
     # print(bst_tree.count())
     # bst_tree.remove(6)

@@ -43,10 +43,29 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         self.assertEqual(self.SUT.to_array(), [4, 1, 6, 0, 5, 12, 7, 13])
 
     def test_insert(self):
-        pass
+        self.SUT.insert(2)
+        self.assertEqual(self.SUT.to_array(), [4, 1, 6, 0, 2, 5, 12, 7, 13])
+        self.assertEqual(self.SUT.count(), 9)
 
-    def test_remove(self):
-        pass
+    def test_remove_last_node(self):
+        self.SUT.remove(0)
+        self.assertEqual(self.SUT.to_array(), [4, 1, 6, 5, 12, 7, 13])
+        self.assertEqual(self.SUT.count(), 7)
+
+    def test_remove_with_one_child(self):
+        self.SUT.remove(1)
+        self.assertEqual(self.SUT.to_array(), [4, 0, 6, 5, 12, 7, 13])
+        self.assertEqual(self.SUT.count(), 7)
+
+    def test_remove_with_children(self):
+        self.SUT.remove(6)
+        self.assertEqual(self.SUT.to_array(), [4, 1, 7, 0, 5, 12, 13])
+        self.assertEqual(self.SUT.count(), 7)
+
+    def test_remove_root(self):
+        self.SUT.remove(4)
+        self.assertEqual(self.SUT.to_array(), [5, 1, 6, 0, 12, 7, 13])
+        self.assertEqual(self.SUT.count(), 7)
 
 if __name__ == '__main__':
     unittest.main()
