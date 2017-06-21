@@ -204,9 +204,6 @@ class BinarySearchTree:
             self._trav_post(node.right, action)
             action(node)
 
-    def print(self, node):
-        pass
-
     def root(self):
         """Root node"""
 
