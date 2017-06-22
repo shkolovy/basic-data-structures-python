@@ -111,14 +111,20 @@ class DoublyLinkedList:
         raise ValueError(f"can't find value to remove: {val}")
 
     def count(self):
+        """Count"""
+
         return self.size
 
     def clear(self):
+        """Remove all"""
+
         self.root_node = None
         self.last_node = None
         self.size = 0
 
     def contains(self, val):
+        """Contains"""
+
         current_node = self.root_node
         while current_node is not None:
             if current_node.val == val:
@@ -138,28 +144,28 @@ class DoublyLinkedList:
         return ar
 
 if __name__ == "__main__":
-    linked_list = DoublyLinkedList([1, 2, 3, 4, 5, 6, 33, 44])
-    print(linked_list)
+    # linked_list = DoublyLinkedList([1, 2, 3, 4, 5, 6, 33, 44])
+    # print(linked_list)
     # print(linked_list.contains(2))
     # print(linked_list)
     # print(len(linked_list))
 
-    for n in linked_list:
-        print(n)
-
-    print(linked_list.count())
-    linked_list.add(7)
-    print(linked_list)
-    linked_list.remove(7)
-    print(linked_list.to_array())
-    linked_list.remove(5)
-    print(linked_list.to_array())
-    linked_list.remove(1)
-    print(linked_list.to_array())
-    linked_list.remove_first()
-    print(linked_list.to_array())
-    linked_list.remove_last()
-    print(linked_list.to_array())
+    # for n in linked_list:
+    #     print(n)
+    #
+    # print(linked_list.count())
+    # linked_list.add(7)
+    # print(linked_list)
+    # linked_list.remove(7)
+    # print(linked_list.to_array())
+    # linked_list.remove(5)
+    # print(linked_list.to_array())
+    # linked_list.remove(1)
+    # print(linked_list.to_array())
+    # linked_list.remove_first()
+    # print(linked_list.to_array())
+    # linked_list.remove_last()
+    # print(linked_list.to_array())
     # linked_list.remove(2)
     # linked_list.remove(4)
     # print(linked_list.to_array())

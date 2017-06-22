@@ -154,14 +154,14 @@ class BinarySearchTree:
 
         current_node = self.root_node
 
-        q.put(current_node)
+        q.enqueue(current_node)
         while not q.empty():
-            node = q.get()
+            node = q.dequeue()
             ar.append(node.val)
             if node.left is not None:
-                q.put(node.left)
+                q.enqueue(node.left)
             if node.right is not None:
-                q.put(node.right)
+                q.enqueue(node.right)
 
         return ar
 
@@ -180,7 +180,7 @@ class BinarySearchTree:
             self._trav_in(node.right, action)
 
     def traversal_pre_order(self, action):
-        """PreOrder traversal, like DFS"""
+        """PreOrder traversal"""
 
         self._trav_pre(self.root_node, action)
 
@@ -217,12 +217,30 @@ class BinarySearchTree:
 
         return self.size
 
+    """
+    (4)
+    |
+    `---(1)
+    |   |
+    |   `---(0)
+    |
+    `---(6)
+        |
+        `---(5)
+        |
+        `---(12)
+            |
+            `---(7)
+            |
+            `---(13)
+    """
 
 if __name__ == "__main__":
     pass
 
-    # some_values = [4, 1, 6, 0, 12, 7, 13, 5]
-    # bst_tree = BinarySearchTree(some_values)
+    some_values = [4, 1, 6, 0, 12, 7, 13, 5, 9]
+    bst_tree = BinarySearchTree(some_values)
+
     # bst_tree.traversal_pre_order(print)
     # bst_tree.traversal_post_order(print)
     # bst_tree.traversal_in_order(print)

@@ -42,20 +42,20 @@ class LinkedListTestCase(unittest.TestCase):
         self.assertEqual(self.SUT.contains(12), True)
         self.assertEqual(self.SUT.count(), 9)
 
-    def remove_first(self):
+    def test_remove_first(self):
         self.SUT.remove(4)
         self.assertEqual(self.SUT.count(), 7)
         self.assertEqual(self.SUT.to_array(), [1, 6, 0, 12, 7, 13, 5])
 
-    def remove_last(self):
+    def test_remove_last(self):
         self.SUT.remove(5)
         self.assertEqual(self.SUT.count(), 7)
         self.assertEqual(self.SUT.to_array(), [4, 1, 6, 0, 12, 7, 13])
 
-    def remove_middle(self):
+    def test_remove_middle(self):
         self.SUT.remove(0)
         self.assertEqual(self.SUT.count(), 7)
-        self.assertEqual(self.SUT.to_array(), [1, 6, 12, 7, 13, 5])
+        self.assertEqual(self.SUT.to_array(), [4, 1, 6, 12, 7, 13, 5])
 
 
 if __name__ == '__main__':
