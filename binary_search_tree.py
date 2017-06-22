@@ -217,6 +217,18 @@ class BinarySearchTree:
 
         return self.size
 
+    def print(self):
+        self._print_node(self.root_node, 0)
+
+    def _print_node(self, node, depth):
+        val = f"{node.val}"
+        print(val.rjust(len(val) + depth * 5, " "))
+
+        if node.left is not None:
+            self._print_node(node.left, depth+1)
+
+        if node.right is not None:
+            self._print_node(node.right, depth+1)
     """
     (4)
     |
@@ -231,6 +243,8 @@ class BinarySearchTree:
         `---(12)
             |
             `---(7)
+            |   |
+            |   `---(9)
             |
             `---(13)
     """
@@ -240,7 +254,7 @@ if __name__ == "__main__":
 
     some_values = [4, 1, 6, 0, 12, 7, 13, 5, 9]
     bst_tree = BinarySearchTree(some_values)
-
+    bst_tree.print()
     # bst_tree.traversal_pre_order(print)
     # bst_tree.traversal_post_order(print)
     # bst_tree.traversal_in_order(print)
