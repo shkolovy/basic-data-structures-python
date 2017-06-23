@@ -5,3 +5,4 @@
 - Doubly linked list (need for stack and queue)
 - Stack
 - Queue
+- Hash Map
