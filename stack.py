@@ -1,4 +1,8 @@
-"""Stack LIFO"""
+"""
+Stack module
+
+LIFO (first in first out)
+"""
 
 import doubly_linked_list
 

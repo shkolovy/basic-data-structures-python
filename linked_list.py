@@ -1,4 +1,6 @@
-"""Linked list module"""
+"""
+Linked list module
+"""
 
 
 class LLNode:
@@ -55,12 +57,6 @@ class LinkedList:
 
         self.size += 1
 
-    def remove_first(self):
-        pass
-
-    def remove_last(self):
-        pass
-
     def remove(self, val):
         """Remove node"""
 
@@ -114,14 +110,15 @@ class LinkedList:
         return ar
 
 if __name__ == "__main__":
-    linked_list = LinkedList([1, 2, 3, 4, 5, 6, 33, 44])
+    pass
+    # linked_list = LinkedList([1, 2, 3, 4, 5, 6, 33, 44])
     # print(linked_list.contains(2))
     # print(linked_list.contains(24))
     # print(linked_list)
     # print(len(linked_list))
 
-    for n in linked_list:
-        print(n)
+    # for n in linked_list:
+    #     print(n)
 
     # print(linked_list.count())
     # linked_list.add(7)

@@ -1,4 +1,10 @@
-"""Implementation of custom hash_map"""
+"""
+Implementation of custom hash_map
+
+allows to get item by key in O(1) complexity
+in this case worst complexity will be bigger as it doesn't support array resize which
+cause lots of collisions if capacity has been chosen wrong
+"""
 
 
 class HashMap:

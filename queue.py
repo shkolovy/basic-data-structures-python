@@ -1,4 +1,8 @@
-"""Queue FIFO"""
+"""
+Queue module
+
+FIFO (first in first out)
+"""
 
 import doubly_linked_list
 

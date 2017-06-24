@@ -65,8 +65,5 @@ class HashMapTestCase(unittest.TestCase):
         self.SUT = hash_map.HashMap(4)
         self.assertEqual(self.SUT.capacity, 4)
 
-        # add items to resize opacity
-
-
 if __name__ == '__main__':
     unittest.main()

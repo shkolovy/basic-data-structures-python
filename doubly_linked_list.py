@@ -1,4 +1,11 @@
-"""Doubly Linked list module"""
+"""
+Doubly Linked list module
+
+Same as linked list but can be traversed in both directions,
+this allows to remove first or last element item
+
+can be used in Stack and Queue
+"""
 
 
 class DLLNode:
