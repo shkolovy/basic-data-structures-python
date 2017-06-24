@@ -1,39 +1,64 @@
 """Implementation of custom hash_map"""
 
+FILL_FACTOR = 0.75
+
+
+class HashTable:
+    def __init__(self, capacity):
+        self.capacity = capacity
+
+    def add(self, key, val):
+        pass
+
+    def remove(self, key):
+        pass
+
+    def contains(self, key):
+        pass
+
 
 class HashMap:
-    def __init__(self):
-        self.map_size = 6
-        self.map = [None] * self.map_size
+    def __init__(self, capacity=16):
+        self.capacity = capacity
+        self.table = [None] * self.capacity
         self.size = 0
+        self.max_allowed_items = self.capacity * FILL_FACTOR + 1
 
     def __str__(self):
-        result = "{"
+        """
+        String representation
+
+        ex: {'some_key_1': 'some_val_1', 'some_key_2': 'some_val_2'}
+        """
+
+        result = ""
 
         for i, pair in enumerate(self):
-            result += f"'{pair[0]}':'{pair[1]}'"
-            if i < self.size-1:
-                result += ", "
+            result += f"'{pair[0]}':'{pair[1]}'{', ' if i < self.size-1 else ''}"
 
-        result += "}"
-        return result
+        return f"{{{result}}}"
 
     def __getitem__(self, key):
+        """
+        Indexer
+
+        ex: h_map["some_key_1"]
+        """
+
         return self.get(key)
 
     def __iter__(self):
-        for item in self.map:
-            if item is not None:
-                for pair in item:
-                    yield pair
+        """Items Iterator"""
+
+        return self.items()
 
     def get(self, key, def_value=None):
         """Get item by key"""
 
-        key_hash = self._get_hash(key)
+        index = self._get_hash(key)
 
-        if self.map[key_hash] is not None:
-            for pair in self.map[key_hash]:
+        if self.table[index] is not None:
+            for pair in self.table[index]:
                 if key == pair[0]:
                     return pair[1]
 
@@ -42,55 +67,98 @@ class HashMap:
 
         raise ValueError(f"can't find value with given key {key}")
 
-    def add(self, key, val):
-        """Add or update item"""
+    def update(self, key, val):
+        """Update item"""
 
-        key_hash = self._get_hash(key)
-        key_val = [key, val]
+        index = self._get_hash(key)
 
-        if self.map[key_hash] is None:
-            # can be linked list
-            # create new key-value collection
-            self.map[key_hash] = list([key_val])
-            self.size += 1
-            return
-        else:
-            # override value for the same key
-            for pair in self.map[key_hash]:
+        if self.table[index] is not None:
+            for pair in self.table[index]:
                 if pair[0] == key:
                     pair[1] = val
                     return
 
+        raise ValueError(f"can't find key {key}")
+
+    def add(self, key, val):
+        """Add item"""
+
+        # if self.size >= self.max_allowed_items:
+        #     bigger_map = [None] * self.capacity * 2
+        #
+        #     for pair in self.items():
+        #         bigger_map
+
+        self._add(self.table, key, val)
+
+        self.size += 1
+
+    def _add(self, table, key, val):
+        index = self._get_hash(key)
+        key_val = [key, val]
+
+        if self.table[index] is None:
+            # create new key-value collection
+            table[index] = list([key_val])
+        else:
+            # override value for the same key
+            for pair in table[index]:
+                if pair[0] == key:
+                    raise ValueError(f"duplicate key {key}")
+
             # append key-value collection
-            self.map[key_hash].append(key_val)
-            self.size += 1
+            table[index].append(key_val)
 
     def remove(self, key):
         """Remove item by key"""
 
-        key_hash = self._get_hash(key)
+        index = self._get_hash(key)
 
-        if self.map[key_hash] is not None:
-            for i, pair in enumerate(self.map[key_hash]):
+        if self.table[index] is not None:
+            for i, pair in enumerate(self.table[index]):
                 if key == pair[0]:
-                    del self.map[key_hash][i]
+                    del self.table[index][i]
                     self.size -= 1
                     return
 
         raise ValueError(f"can't find value with given key {key}")
 
+    def empty(self):
+        return self.size == 0
+
     def count(self):
+        """Count"""
+
         return self.size
 
     def contains(self, key):
-        key_hash = self._get_hash(key)
+        """Checks if the key is in the hashmap"""
 
-        if self.map[key_hash] is not None:
-            for pair in self.map[key_hash]:
-                if pair[0] == key:
-                    return True
+        return key in self.keys()
 
-        return False
+    def keys(self):
+        """Returns keys generator"""
+
+        for items in self.table:
+            if items is not None:
+                for pair in items:
+                    yield pair[0]
+
+    def values(self):
+        """Returns values generator"""
+
+        for items in self.table:
+            if items is not None:
+                for pair in items:
+                    yield pair[1]
+
+    def items(self):
+        """Returns items generator"""
+
+        for items in self.table:
+            if items is not None:
+                for pair in items:
+                    yield pair
 
     def _get_hash(self, key):
         # should be more complicated
@@ -99,25 +167,34 @@ class HashMap:
         for char in str(key):
             _hash += ord(char)
 
-        return _hash % self.map_size
+        return _hash % self.capacity
 
 
 if __name__ == "__main__":
-    hash_map = HashMap()
-    hash_map.add("test1", "apple")
-    hash_map.add("test2", "orange")
-    hash_map.add("test11", "grape")
-    hash_map.add("test111", "kiwi")
-    hash_map.add("test1", "apple_new")
+    pass
+    # hash_map = HashMap()
+    # hash_map.add("test1", "apple")
+    # hash_map.add("test2", "orange")
+    # hash_map.add("test11", "grape")
+    # hash_map.add("test111", "kiwi")
+    # hash_map.add("test5", "apple_new")
 
-    print(hash_map.map)
-    print(hash_map.get("test1"))
-    print(hash_map.get("xxxxxxxx", "my def value"))
-    print(hash_map.remove("test1"))
-    print(hash_map.map)
+    # print(hash_map)
+    # print(list(hash_map.keys()))
+    # print(*hash_map.values())
+    # print(*hash_map.items())
+    # print(hash_map.table)
+    # print(hash_map.get("test1"))
+    # print(hash_map.get("xxxxxxxx", "my def value"))
+    # print(hash_map.remove("test1"))
+    # print(hash_map.table)
+    #
 
-    for key, val in hash_map:
-        print(f"key: {key}, val: {val}")
-
-    print(hash_map)
-    print(hash_map['test2'])
+    # for k in hash_map.keys():
+    #     print(f"key: {k}")
+    #
+    # for k, v in hash_map:
+    #     print(f"key: {k}, val: {v}")
+    #
+    # print(hash_map)
+    # print(hash_map['test2'])
