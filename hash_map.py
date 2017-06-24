@@ -1,28 +1,14 @@
 """Implementation of custom hash_map"""
 
-FILL_FACTOR = 0.75
-
-
-class HashTable:
-    def __init__(self, capacity):
-        self.capacity = capacity
-
-    def add(self, key, val):
-        pass
-
-    def remove(self, key):
-        pass
-
-    def contains(self, key):
-        pass
-
 
 class HashMap:
     def __init__(self, capacity=16):
+        if capacity < 1:
+            raise ValueError("capacity can't be less then 1")
+
         self.capacity = capacity
         self.table = [None] * self.capacity
         self.size = 0
-        self.max_allowed_items = self.capacity * FILL_FACTOR + 1
 
     def __str__(self):
         """
@@ -83,31 +69,22 @@ class HashMap:
     def add(self, key, val):
         """Add item"""
 
-        # if self.size >= self.max_allowed_items:
-        #     bigger_map = [None] * self.capacity * 2
-        #
-        #     for pair in self.items():
-        #         bigger_map
-
-        self._add(self.table, key, val)
-
-        self.size += 1
-
-    def _add(self, table, key, val):
         index = self._get_hash(key)
         key_val = [key, val]
 
         if self.table[index] is None:
             # create new key-value collection
-            table[index] = list([key_val])
+            self.table[index] = list([key_val])
         else:
             # override value for the same key
-            for pair in table[index]:
+            for pair in self.table[index]:
                 if pair[0] == key:
                     raise ValueError(f"duplicate key {key}")
 
             # append key-value collection
-            table[index].append(key_val)
+            self.table[index].append(key_val)
+
+        self.size += 1
 
     def remove(self, key):
         """Remove item by key"""
